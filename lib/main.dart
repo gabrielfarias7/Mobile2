@@ -12,12 +12,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Modified Flutter App',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
+        colorScheme: ColorScheme.fromSwatch(
+          primarySwatch: Colors.blue,
+          accentColor: Colors.orange,
+          brightness: Brightness.light,
+        ),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Modified Flutter Home Page'),
     );
   }
 }
@@ -35,12 +39,12 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   Color _backgroundColor = Colors.white;
   final List<Color> _availableColors = [
-    Colors.red,
-    Colors.green,
-    Colors.blue,
-    Colors.yellow,
-    Colors.orange,
-    Colors.purple,
+    Colors.teal,
+    Colors.pink,
+    Colors.indigo,
+    Colors.amber,
+    Colors.deepOrange,
+    Colors.deepPurple,
   ];
 
   void _incrementCounter() {
@@ -55,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void _mudarCorDeFundo() {
+  void _changeBackgroundColor() {
     final Random random = Random();
     final int index = random.nextInt(_availableColors.length);
     setState(() {
@@ -66,54 +70,55 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.amber,
-          title: Text(widget.title),
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const Text(
-                'You have pushed the button this many times:',
-              ),
+      appBar: AppBar(
+        backgroundColor: Colors.green,
+        title: Text(widget.title),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text(
+              'Número de cliques:',
+            ),
+            Text(
+              '$_counter',
+              style: Theme.of(context).textTheme.headline4,
+            ),
+            if (_counter >= 10)
               Text(
-                '$_counter',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-              if (_counter >= 10)
-                Text(
-                  'Máximo de pessoas excedido!',
-                  style: TextStyle(
-                    color: Colors.red,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
+                'Limite máximo de cliques atingido!',
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
                 ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  FloatingActionButton(
-                    onPressed: _incrementCounter,
-                    tooltip: 'Increment',
-                    child: Text('+'),
-                  ),
-                  SizedBox(width: 10),
-                  FloatingActionButton(
-                    onPressed: _decrementCounter,
-                    tooltip: 'Decrement',
-                    child: Text('-'),
-                  ),
-                  FloatingActionButton(
-                    onPressed: _mudarCorDeFundo,
-                    tooltip: 'Change Background Color',
-                    child: Text('C'),
-                  )
-                ],
               ),
-            ],
-          ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FloatingActionButton(
+                  onPressed: _incrementCounter,
+                  tooltip: 'Incrementar',
+                  child: Icon(Icons.add),
+                ),
+                SizedBox(width: 10),
+                FloatingActionButton(
+                  onPressed: _decrementCounter,
+                  tooltip: 'Decrementar',
+                  child: Icon(Icons.remove),
+                ),
+                FloatingActionButton(
+                  onPressed: _changeBackgroundColor,
+                  tooltip: 'Alterar Cor de Fundo',
+                  child: Icon(Icons.color_lens),
+                )
+              ],
+            ),
+          ],
         ),
-        backgroundColor: _backgroundColor);
+      ),
+      backgroundColor: _backgroundColor,
+    );
   }
 }
